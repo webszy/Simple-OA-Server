@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket测试</title>
+</head>
+<body>
+  <textarea  id="txt" cols="30" rows="10"></textarea>
+  <input type="button" value="发送" id="s">
+<script>
+  window.onload=function(){
+    var ws = new WebSocket('ws://10.35.162.97:3008');
+    ws.onmessage=function(e){
+    console.log('服务器说：'+e.data);
+  };
+  ws.onerror=function(err){
+    console.log('_error');
+    console.log(err);
+  };
+  ws.onopen=function(){
+    console.log('_connect')
+     document.getElementById("s").onclick=function(){
+   let msg=document.getElementById("txt").value
+   console.log("客户端说:"+msg)
+   if (ws.readyState===1) {
+    ws.send(msg)
+    }
+
+}
+ 
+  };
+  ws.onclose=function(){
+    console.log('_close');
+  };
+
+  }
+  
+
+</script>
+</body>
+</html>
+
